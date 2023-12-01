@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body style="display: flex; flex-direction: column; align-items: center;">
+    <header>
+        <img src="https://integrador.grupofornecedora.com.br/imagens/headerFornecedora.jpg" width="600"></img>
+    </header>
+    <main style="width: 600px;">
+        <p>Empresa: <span style="color: red;">{empresa}</span></p>
+        <br>
+        <p>Prezado(a),</p>
+        <p style="color: red;">{cliente}</p>
+        <br>
+        <p>A sua fatura emitida <span style="color: red;">{emissao}</span> já está disponível para pagamento.</p>
+        <table style="width: 100%;">
+            <tr>
+                <th style="border-collapse: collapse; border: 1px solid #ddd; font-size: 17px; background-color: #e5e5e5;">Nota Fiscal</th>
+                <th style="border-collapse: collapse; border: 1px solid #ddd; font-size: 17px; background-color: #e5e5e5;">Data do Vencimento</th>
+                <th style="border-collapse: collapse; border: 1px solid #ddd; font-size: 17px; background-color: #e5e5e5;">Valor do Boleto</th>
+                <th style="border-collapse: collapse; border: 1px solid #ddd; font-size: 17px; background-color: #e5e5e5;">Valor do Título</th>
+            </tr>
+            <tr>
+                <td style="border-collapse: collapse; border: 2px solid #ddd; font-size: 17px; text-align: center;">{numeroNotaFiscal}</td>
+                <td style="border-collapse: collapse; border: 2px solid #ddd; font-size: 17px; text-align: center;">{vencimentoNotaFiscal}</td>
+                <td style="border-collapse: collapse; border: 2px solid #ddd; font-size: 17px; text-align: center;">R$ {valorBoleto}</td>
+                <td style="border-collapse: collapse; border: 2px solid #ddd; font-size: 17px; text-align: center;">R$ {valorTitulo}</td>
+            </tr>
+        </table>
+        <br>
+        <p style="font-size: 11px;">
+            O Grupo Fornecedora alerta a seus clientes para ficarem atentos aos seus boletos. Observem o remetente
+            do e-mail, utilizamos o domínio @grupofornecedora.com.br e verifiquem o real beneficário do boleto na
+            tela de pagamento. <br>Caso tenha recebido vários e-mails desse com outros domínios, entre em contato conosco.
+            Qualquer dúvida entre em contato com o nosso financeiro pelo e-mail: contas.receber@grupofornecedora.com.br.
+            ou pelos telefones: <br>Whatsapp: (85) 99747-2533 <br>Whatsapp: (85) 99917-2390 <br>Comercial: (85) 3366-1212
+            <br>Caso já tenha efetuado o pagamento, favor desconsiderar esse e-mail <br>
+            <b>Este é um e-mail automático favor não responder.</b>
+        </p>
+    </main>
+    <footer>
+        <img src="https://integrador.grupofornecedora.com.br/imagens/footerFornecedora.jpg" width="600"></img>
+    </footer>
+</body>
+</html>

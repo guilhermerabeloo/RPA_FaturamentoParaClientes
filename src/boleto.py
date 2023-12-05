@@ -3,6 +3,8 @@ import pyautogui
 import time
 
 def downloadBoleto(nomeModulo, lancamento):
+    print('iniciando emissao do boleto', lancamento)
+
     app = Application(backend="win32").connect(title=f'{nomeModulo} - [Empresa: MATRIZ - Usuário: MARCOS GUILHERME RABELO]')
     main_window = app.top_window()
     main_window.set_focus()

@@ -38,5 +38,3 @@ def sqlPool(script):
     
     finally:
         conexao.close()
-        print("Conexão com banco de dados encerrada!")
-        return

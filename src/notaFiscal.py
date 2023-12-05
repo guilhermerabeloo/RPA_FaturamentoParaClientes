@@ -2,7 +2,8 @@ from pywinauto.application import Application
 import pyautogui
 import time
 
-def downloadNotaFiscal(numeroNf, serieNf):
+def downloadNotaFiscal(numeroNf, serieNf, tipo):
+    print('iniciando emissao da nota', numeroNf)
     app = Application(backend="win32").connect(title=f'Contas a Receber - [Empresa: MATRIZ - Usuário: MARCOS GUILHERME RABELO]')
     main_window = app.top_window()
     main_window.set_focus()
@@ -33,8 +34,9 @@ def downloadNotaFiscal(numeroNf, serieNf):
 
     pyautogui.press('SPACE')
     time.sleep(.5)
-    pyautogui.hotkey('ALT', 'N')
-    time.sleep(.5)
+    if tipo == 'boleto':
+        pyautogui.hotkey('ALT', 'N')
+        time.sleep(1)
     pyautogui.hotkey('ALT', 'S')
     time.sleep(4)
 

@@ -5,7 +5,7 @@ import time
 def downloadBoleto(nomeModulo, lancamento):
     print('iniciando emissao do boleto', lancamento)
 
-    app = Application(backend="win32").connect(title=f'{nomeModulo} - [Empresa: MATRIZ - Usuário: MARCOS GUILHERME RABELO]')
+    app = Application(backend="win32").connect(class_name="FNWND3115")
     main_window = app.top_window()
     main_window.set_focus()
     time.sleep(1)
@@ -22,16 +22,16 @@ def downloadBoleto(nomeModulo, lancamento):
     time.sleep(3)
 
     # Emitindo boleto
-    app.ContasAReceberEmpresaMatrizUsuarioMarcosGuilhermeRabelo.child_window(title="Título", class_name="Button").wrapper_object().click_input()
+    app.ContasAReceberEmpresaUsuarioMarcosGuilhermeRabelo.child_window(title="Título", class_name="Button").wrapper_object().click_input()
     time.sleep(.5)
     pyautogui.press('TAB')
     pyautogui.write(lancamento)
     pyautogui.press('TAB')
     time.sleep(.5)
-    app.ContasAReceberEmpresaMatrizUsuarioMarcosGuilhermeRabelo.child_window(title="Confi&g.", class_name="Button").wrapper_object().click_input()
+    app.ContasAReceberEmpresaUsuarioMarcosGuilhermeRabelo.child_window(title="Confi&g.", class_name="Button").wrapper_object().click_input()
     pyautogui.press('ENTER')
     time.sleep(.5)
-    app.ContasAReceberEmpresaMatrizUsuarioMarcosGuilhermeRabelo.child_window(title="&Imprimir", class_name="Button").wrapper_object().click_input()
+    app.ContasAReceberEmpresaUsuarioMarcosGuilhermeRabelo.child_window(title="&Imprimir", class_name="Button").wrapper_object().click_input()
     time.sleep(4)
     atencao = Application(backend="win32").connect(title=f'Atenção')
     atencao.Atencao.child_window(title="&OK", class_name="Button").wrapper_object().click_input()
@@ -57,6 +57,6 @@ def downloadBoleto(nomeModulo, lancamento):
     
     main_window = app.top_window()
     main_window.set_focus()
-    app.ContasAReceberEmpresaMatrizUsuarioMarcosGuilhermeRabelo.child_window(title="&Cancelar", class_name="Button").wrapper_object().click_input()
+    app.ContasAReceberEmpresaUsuarioMarcosGuilhermeRabelo.child_window(title="&Cancelar", class_name="Button").wrapper_object().click_input()
     
 time.sleep(5)

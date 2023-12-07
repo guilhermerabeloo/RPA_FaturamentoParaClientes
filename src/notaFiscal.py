@@ -4,7 +4,8 @@ import time
 
 def downloadNotaFiscal(numeroNf, serieNf, tipo):
     print('iniciando emissao da nota', numeroNf)
-    app = Application(backend="win32").connect(title=f'Contas a Receber - [Empresa: MATRIZ - Usuário: MARCOS GUILHERME RABELO]')
+    # app = Application(backend="win32").connect(title=f'Contas a Receber - [Empresa: MATRIZ - Usuário: MARCOS GUILHERME RABELO]')
+    app = Application(backend="win32").connect(class_name="FNWND3115")
     main_window = app.top_window()
     main_window.set_focus()
     time.sleep(1)
@@ -27,8 +28,9 @@ def downloadNotaFiscal(numeroNf, serieNf, tipo):
     pyautogui.press('TAB')
     time.sleep(2)
 
+    quantidadeTab = 9 if serieNf == 'S' else 10
     # Selecionando a opção de imprimir
-    for i in range(10):
+    for i in range(quantidadeTab):
         pyautogui.press('TAB')
         time.sleep(.03)
 
@@ -40,12 +42,21 @@ def downloadNotaFiscal(numeroNf, serieNf, tipo):
     pyautogui.hotkey('ALT', 'S')
     time.sleep(4)
 
-    for i in range(2):
-        pyautogui.press('TAB')
+    if serieNf == 'S':
+        for i in range(6):
+            pyautogui.press('down')
+            time.sleep(.01)
+
+        pyautogui.press('ENTER')
+        time.sleep(5)
+        pyautogui.hotkey('ALT', 'N')
+    else:
+        for i in range(2):
+            pyautogui.press('TAB')
+            time.sleep(.01)
+        pyautogui.press('down')
         time.sleep(.01)
-    pyautogui.press('down')
-    time.sleep(.01)
-    pyautogui.press('ENTER')
+        pyautogui.press('ENTER')
 
     # Salvando boleto
     time.sleep(10)

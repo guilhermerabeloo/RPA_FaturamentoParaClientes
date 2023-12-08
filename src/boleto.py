@@ -2,7 +2,7 @@ from pywinauto.application import Application
 import pyautogui
 import time
 
-def downloadBoleto(nomeModulo, lancamento):
+def downloadBoleto(lancamento):
     print('iniciando emissao do boleto', lancamento)
 
     app = Application(backend="win32").connect(class_name="FNWND3115")
@@ -37,7 +37,7 @@ def downloadBoleto(nomeModulo, lancamento):
     atencao.Atencao.child_window(title="&OK", class_name="Button").wrapper_object().click_input()
 
     # Salvando boleto
-    time.sleep(3)
+    time.sleep(6)
     explorerBoleto = Application(backend="win32").connect(title=f'Salvar Saída de Impressão como')
     main_window = explorerBoleto.top_window()
     main_window.set_focus()
@@ -53,7 +53,16 @@ def downloadBoleto(nomeModulo, lancamento):
     pyautogui.write(f'C:\\Users\\guilherme.rabelo\\Desktop\\TesteRPA\\Boletos')
     pyautogui.press('ENTER')
     pyautogui.hotkey('alt', 'l')
-    time.sleep(7)
+    time.sleep(1)
+
+    try: 
+        substituirArquivo = Application(backend="win32").connect(title=f'Confirmar Salvar como')
+        substituirArquivo.ConfirmarSalvarComo.wait('visible', timeout=2)
+        pyautogui.hotkey('alt', 's')
+        time.sleep(7)
+
+    except:
+        time.sleep(7)
     
     main_window = app.top_window()
     main_window.set_focus()

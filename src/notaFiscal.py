@@ -2,7 +2,7 @@ from pywinauto.application import Application
 import pyautogui
 import time
 
-def downloadNotaFiscal(numeroNf, serieNf, tipo):
+def downloadNotaFiscal(codNf, numeroNf, serieNf, tipo):
     print('iniciando emissao da nota', numeroNf)
     # app = Application(backend="win32").connect(title=f'Contas a Receber - [Empresa: MATRIZ - Usuário: MARCOS GUILHERME RABELO]')
     app = Application(backend="win32").connect(class_name="FNWND3115")
@@ -20,7 +20,7 @@ def downloadNotaFiscal(numeroNf, serieNf, tipo):
     time.sleep(1)
     pyautogui.press('ENTER')
     time.sleep(3)
-    pyautogui.write(numeroNf)
+    pyautogui.write(codNf)
     time.sleep(.5)
     pyautogui.press('TAB')
     pyautogui.write(serieNf)
@@ -75,7 +75,16 @@ def downloadNotaFiscal(numeroNf, serieNf, tipo):
     pyautogui.write(f'C:\\Users\\guilherme.rabelo\\Desktop\\TesteRPA\\NotasFiscais')
     pyautogui.press('ENTER')
     pyautogui.hotkey('alt', 'l')
-    time.sleep(7)
+
+    time.sleep(2)
+    try: 
+        substituirArquivo = Application(backend="win32").connect(title=f'Confirmar Salvar como')
+        substituirArquivo.ConfirmarSalvarComo.wait('visible', timeout=2)
+        pyautogui.hotkey('alt', 's')
+        time.sleep(7)
+
+    except:
+        time.sleep(7)
 
     # Saindo da tela de nota fiscal de saída
     pyautogui.press('ESC')

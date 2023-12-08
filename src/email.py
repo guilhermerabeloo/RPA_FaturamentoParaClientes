@@ -13,17 +13,18 @@ def envioDoEmail(tipo, dados):
     if tipo == 'carteira':
         with open(html_file_path_carteira, 'r', encoding='utf-8') as file:
             html_body = file.read()
-            html_body = html_body.format(cliente=dados['cliente'], emissao=dados['emissao'], empresa=dados['empresa'], numeroNotaFiscal=dados['titulo'], vencimentoNotaFiscal=dados['vencimento'], valorBoleto=dados['boleto'], valorTitulo=dados['nota'])
+            html_body = html_body.format(cliente=dados['cliente'], emissao=dados['emissao'], empresa=dados['empresa'], numeroNotaFiscal=dados['numeroNota'], vencimentoNotaFiscal=dados['vencimento'], valorBoleto=dados['boleto'], valorTitulo=dados['nota'])
         assunto = f"Olá {dados['cliente']}, a sua Nota Fiscal está disponível!"
 
     else:
         with open(html_file_path_boleto, 'r', encoding='utf-8') as file:
             html_body = file.read()
-            html_body = html_body.format(cliente=dados['cliente'], emissao=dados['emissao'], empresa=dados['empresa'], numeroNotaFiscal=dados['titulo'], vencimentoNotaFiscal=dados['vencimento'], valorBoleto=dados['boleto'], valorTitulo=dados['nota'])
+            html_body = html_body.format(cliente=dados['cliente'], emissao=dados['emissao'], empresa=dados['empresa'], numeroNotaFiscal=dados['numeroNota'], vencimentoNotaFiscal=dados['vencimento'], valorBoleto=dados['boleto'], valorTitulo=dados['nota'])
         assunto = f"Olá {dados['cliente']}, o boleto está disponível!"
         email.Attachments.Add(dados['caminhoBoleto'])
 
     email.To = dados['email']
+    email.CC = "maiara.silveira@grupofornecedora.com.br"
     email.Subject = assunto
     email.HTMLBody = html_body
     email.Attachments.Add(dados['caminhoNota'])

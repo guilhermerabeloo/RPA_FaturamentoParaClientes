@@ -15,23 +15,17 @@ with open("../config/config.json", "r", encoding="utf-8") as file:
 
     dealernetModulo = sensitive_data['modulosDealernet']['ContasAReceber']
     executavel = dealernetModulo['executavel']
-    nomeModulo = dealernetModulo['nome']
 
-def tratarErro(funcao, mensagem, param1, param2):
-    try:
-        funcao(param1, param2)
-    except Exception as err:
-        print(f'Erro ao "{mensagem}"')
-
-tratarErro(loginDealernet, 'efetuar login', executavel, senha)
-empresas = sqlPool("""
+# loginDealernet(executavel, senha)
+empresas = sqlPool("SELECT", """
                     SELECT 
                         emp_cd,
                         emp_ds,
                         emp_banco
                     FROM [BD_MTZ_FOR]..ger_emp
                     WHERE 
-                        emp_cd IN ('01')
+                        emp_cd IN ('03')
+                        -- emp_cd IN ('03', '04', '13')
                         --emp_cd NOT IN ('20', '10', '07', '06', '05', '08', '09')
                     ORDER BY emp_ds
                 """)
@@ -42,33 +36,81 @@ for empresa in empresas:
 
     selecionarEmpresa(empresa)
 
-    titulosTotais = sqlPool(f"EXEC autocob.consulta_titulos '{codEmpresa}'")
+    titulosTotais = sqlPool("SELECT", f"EXEC autocob.consulta_titulos '{codEmpresa}'")
     def emailsNaoEnviados(titulo):
-        return titulo[14] == '1'
+        return titulo[15] == '1'
 
     titulosPendentes = list(filter(emailsNaoEnviados, titulosTotais))
     for i, titulo in enumerate(titulosPendentes):
-        numeroNota = titulo[7]
         lancamento = titulo[5]
-        serie = titulo[8]
-        tipo = 'carteira' if titulo[4][0:2] == 'C.' else 'boleto'
+        numeroNota = titulo[8]
+
         dados = {
+            'codCliente': titulo[2],
             'cliente': titulo[3],
+            'codigoDaNota': titulo[7],
+            'numeroNota': titulo[8],
+            'lancamento': titulo[5],
+            'serie': titulo[9],
+            "parcela": titulo[6],
+            'tipo': 'carteira' if titulo[4][0:2] == 'C.' else 'boleto',
             'email': 'guilherme.rabelo@grupofornecedora.com.br',
-            'emissao': titulo[11],
-            'vencimento': titulo[12],
+            'emissao': titulo[12],
+            'vencimento': titulo[13],
+            'codEmpresa': titulo[0],
             'empresa': titulo[1],
-            'nota': titulo[10],
-            'boleto': titulo[9],
+            'nota': titulo[11],
+            'boleto': titulo[10],
             'titulo': titulo[5],
             'caminhoNota': f'C:\\Users\\guilherme.rabelo\\Desktop\\TesteRPA\\NotasFiscais\\NF_{numeroNota}.pdf',
             'caminhoBoleto': f'C:\\Users\\guilherme.rabelo\\Desktop\\TesteRPA\\Boletos\\Boleto_{lancamento}.pdf'
         }
 
-        if titulo[6] == '001':
-            downloadNotaFiscal(numeroNota, serie, tipo)
-        if tipo=='boleto':
-            downloadBoleto(nomeModulo, lancamento)
+        try:
+            if dados['parcela'] == '001':
+                downloadNotaFiscal(dados['codigoDaNota'], dados['numeroNota'], dados['serie'], dados['tipo'])
+            if dados['tipo']=='boleto':
+                downloadBoleto(dados['lancamento'])
+            envioDoEmail(dados['tipo'], dados)
 
-        envioDoEmail(tipo, dados)
-
+            sqlPool("INSERT", f"""
+                    DECLARE @codEmpresa VARCHAR(7) = '{dados['codEmpresa']}'
+                    DECLARE @codCliente VARCHAR(7) = '{dados['codCliente']}'
+                    DECLARE @titulo VARCHAR(7) = '{dados['lancamento']}'
+                    DECLARE @dataOriginal DATE =  CONVERT(DATE, '{dados['emissao']}', 103)
+                    DECLARE @possuiBoleto CHAR(1) = '{'0' if dados['tipo'] == 'carteira' else '1'}'
+                    DECLARE @sucesso CHAR(1) = '1'
+                    
+                    DECLARE @dataFormatada VARCHAR(8) =  CONVERT(VARCHAR(8), @dataOriginal, 112)
+                    
+                    DECLARE @sqlText VARCHAR(MAX) = 
+                    '
+                        INSERT INTO autocob.log_execucoes_teste
+                        (empresa, cliente, titulo, dt_tituloCriacao, boleto, sucesso)
+                        VALUES
+                            ('''+@codEmpresa+''','''+@codCliente+''','''+@titulo+''', '''+@dataFormatada+''', '''+@possuiBoleto+''','''+@sucesso+''')
+                    '
+                    
+                    EXEC(@sqlText)
+            """)
+        except Exception as err:
+            sqlPool("INSERT", f"""
+                    DECLARE @codEmpresa VARCHAR(7) = '{dados['codEmpresa']}'
+                    DECLARE @codCliente VARCHAR(7) = '{dados['codCliente']}'
+                    DECLARE @titulo VARCHAR(7) = '{dados['lancamento']}'
+                    DECLARE @dataOriginal DATE =  CONVERT(DATE, '{dados['emissao']}', 103)
+                    DECLARE @possuiBoleto CHAR(1) = '{'0' if dados['tipo'] == 'carteira' else '1'}'
+                    DECLARE @sucesso CHAR(1) = '0'
+                    
+                    DECLARE @dataFormatada VARCHAR(8) =  CONVERT(VARCHAR(8), @dataOriginal, 112)
+                    
+                    DECLARE @sqlText VARCHAR(MAX) = 
+                    '
+                        INSERT INTO autocob.log_execucoes_teste
+                        (empresa, cliente, titulo, dt_tituloCriacao, boleto, sucesso)
+                        VALUES
+                            ('''+@codEmpresa+''','''+@codCliente+''','''+@titulo+''', '''+@dataFormatada+''', '''+@possuiBoleto+''','''+@sucesso+''')
+                    '
+                    
+                    EXEC(@sqlText)
+            """)

@@ -81,15 +81,15 @@ def downloadNotaFiscal(codNf, numeroNf, serieNf, tipo):
         substituirArquivo = Application(backend="win32").connect(title=f'Confirmar Salvar como')
         substituirArquivo.ConfirmarSalvarComo.wait('visible', timeout=2)
         pyautogui.hotkey('alt', 's')
-        time.sleep(7)
+        time.sleep(10)
 
     except:
-        time.sleep(7)
+        time.sleep(10)
 
     # Saindo da tela de nota fiscal de saída
     pyautogui.press('ESC')
     time.sleep(.5)
-    app.ContasAReceberEmpresaMatrizUsuarioMarcosGuilhermeRabelo.child_window(title="&S", class_name="Button").wrapper_object().click_input()
+    app.ContasAReceberEmpresaMatrizUsuarioAutomacao.child_window(title="&S", class_name="Button").wrapper_object().click_input()
 
 time.sleep(5)
 

@@ -16,7 +16,7 @@ with open("../config/config.json", "r", encoding="utf-8") as file:
     dealernetModulo = sensitive_data['modulosDealernet']['ContasAReceber']
     executavel = dealernetModulo['executavel']
 
-# loginDealernet(executavel, senha)
+loginDealernet(executavel, senha)
 empresas = sqlPool("SELECT", """
                     SELECT 
                         emp_cd,
@@ -24,9 +24,9 @@ empresas = sqlPool("SELECT", """
                         emp_banco
                     FROM [BD_MTZ_FOR]..ger_emp
                     WHERE 
-                        emp_cd IN ('03')
-                        -- emp_cd IN ('03', '04', '13')
-                        --emp_cd NOT IN ('20', '10', '07', '06', '05', '08', '09')
+                        --emp_cd IN ('03')
+                        --emp_cd IN ('13')
+                        emp_cd NOT IN ('20', '10', '07', '06', '05', '08', '09')
                     ORDER BY emp_ds
                 """)
 
@@ -38,7 +38,8 @@ for empresa in empresas:
 
     titulosTotais = sqlPool("SELECT", f"EXEC autocob.consulta_titulos '{codEmpresa}'")
     def emailsNaoEnviados(titulo):
-        return titulo[15] == '1'
+        # return titulo[5] == '0179134'
+        return titulo[15] != '1'
 
     titulosPendentes = list(filter(emailsNaoEnviados, titulosTotais))
     for i, titulo in enumerate(titulosPendentes):
@@ -54,7 +55,7 @@ for empresa in empresas:
             'serie': titulo[9],
             "parcela": titulo[6],
             'tipo': 'carteira' if titulo[4][0:2] == 'C.' else 'boleto',
-            'email': 'guilherme.rabelo@grupofornecedora.com.br',
+            'email': titulo[14],
             'emissao': titulo[12],
             'vencimento': titulo[13],
             'codEmpresa': titulo[0],
@@ -85,7 +86,7 @@ for empresa in empresas:
                     
                     DECLARE @sqlText VARCHAR(MAX) = 
                     '
-                        INSERT INTO autocob.log_execucoes_teste
+                        INSERT INTO autocob.log_execucoes
                         (empresa, cliente, titulo, dt_tituloCriacao, boleto, sucesso)
                         VALUES
                             ('''+@codEmpresa+''','''+@codCliente+''','''+@titulo+''', '''+@dataFormatada+''', '''+@possuiBoleto+''','''+@sucesso+''')
@@ -106,7 +107,7 @@ for empresa in empresas:
                     
                     DECLARE @sqlText VARCHAR(MAX) = 
                     '
-                        INSERT INTO autocob.log_execucoes_teste
+                        INSERT INTO autocob.log_execucoes
                         (empresa, cliente, titulo, dt_tituloCriacao, boleto, sucesso)
                         VALUES
                             ('''+@codEmpresa+''','''+@codCliente+''','''+@titulo+''', '''+@dataFormatada+''', '''+@possuiBoleto+''','''+@sucesso+''')

@@ -22,16 +22,16 @@ def downloadBoleto(lancamento):
     time.sleep(3)
 
     # Emitindo boleto
-    app.ContasAReceberEmpresaUsuarioMarcosGuilhermeRabelo.child_window(title="Título", class_name="Button").wrapper_object().click_input()
+    app.ContasAReceberEmpresaUsuarioAutomacao.child_window(title="Título", class_name="Button").wrapper_object().click_input()
     time.sleep(.5)
     pyautogui.press('TAB')
     pyautogui.write(lancamento)
     pyautogui.press('TAB')
     time.sleep(.5)
-    app.ContasAReceberEmpresaUsuarioMarcosGuilhermeRabelo.child_window(title="Confi&g.", class_name="Button").wrapper_object().click_input()
+    app.ContasAReceberEmpresaUsuarioAutomacao.child_window(title="Confi&g.", class_name="Button").wrapper_object().click_input()
     pyautogui.press('ENTER')
     time.sleep(.5)
-    app.ContasAReceberEmpresaUsuarioMarcosGuilhermeRabelo.child_window(title="&Imprimir", class_name="Button").wrapper_object().click_input()
+    app.ContasAReceberEmpresaUsuarioAutomacao.child_window(title="&Imprimir", class_name="Button").wrapper_object().click_input()
     time.sleep(4)
     atencao = Application(backend="win32").connect(title=f'Atenção')
     atencao.Atencao.child_window(title="&OK", class_name="Button").wrapper_object().click_input()
@@ -59,13 +59,13 @@ def downloadBoleto(lancamento):
         substituirArquivo = Application(backend="win32").connect(title=f'Confirmar Salvar como')
         substituirArquivo.ConfirmarSalvarComo.wait('visible', timeout=2)
         pyautogui.hotkey('alt', 's')
-        time.sleep(7)
+        time.sleep(10)
 
     except:
-        time.sleep(7)
+        time.sleep(10)
     
     main_window = app.top_window()
     main_window.set_focus()
-    app.ContasAReceberEmpresaUsuarioMarcosGuilhermeRabelo.child_window(title="&Cancelar", class_name="Button").wrapper_object().click_input()
+    app.ContasAReceberEmpresaUsuarioAutomacao.child_window(title="&Cancelar", class_name="Button").wrapper_object().click_input()
     
 time.sleep(5)

@@ -43,25 +43,3 @@ def sqlPool(operacao, script):
     
     finally:
         conexao.close()
-
-
-# sqlPool("INSERT", f"""
-#         DECLARE @codEmpresa VARCHAR(7) = '{'01'}'
-#         DECLARE @codCliente VARCHAR(7) = '{'01'}'
-#         DECLARE @titulo VARCHAR(7) = '{'01'}'
-#         DECLARE @dataOriginal DATE =  CONVERT(DATE, '{'12/12/2023'}', 103)
-#         DECLARE @possuiBoleto CHAR(1) = '{'0'}'
-#         DECLARE @sucesso CHAR(1) = '1'
-        
-#         DECLARE @dataFormatada VARCHAR(8) =  CONVERT(VARCHAR(8), @dataOriginal, 112)
-        
-#         DECLARE @sqlText VARCHAR(MAX) = 
-#         '
-#             INSERT INTO autocob.log_execucoes_teste
-#             (empresa, cliente, titulo, dt_tituloCriacao, boleto, sucesso)
-#             VALUES
-#                 ('''+@codEmpresa+''','''+@codCliente+''','''+@titulo+''', '''+@dataFormatada+''', '''+@possuiBoleto+''','''+@sucesso+''')
-#         '
-        
-#         EXEC(@sqlText)
-# """)

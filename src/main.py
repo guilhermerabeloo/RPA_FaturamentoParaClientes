@@ -6,6 +6,9 @@ from email import envioDoEmail
 from mudarEmpresa import selecionarEmpresa
 import warnings
 import json
+import subprocess
+import time
+
 
 warnings.filterwarnings("ignore", category=UserWarning)
 with open("../config/config.json", "r", encoding="utf-8") as file:
@@ -25,8 +28,8 @@ empresas = sqlPool("SELECT", """
                     FROM [BD_MTZ_FOR]..ger_emp
                     WHERE 
                         --emp_cd IN ('03')
-                        --emp_cd IN ('13')
-                        emp_cd NOT IN ('20', '10', '07', '06', '05', '08', '09')
+                        emp_cd IN ('01')
+                        --emp_cd NOT IN ('20', '10', '07', '06', '05', '08', '09')
                     ORDER BY emp_ds
                 """)
 
@@ -38,7 +41,7 @@ for empresa in empresas:
 
     titulosTotais = sqlPool("SELECT", f"EXEC autocob.consulta_titulos '{codEmpresa}'")
     def emailsNaoEnviados(titulo):
-        # return titulo[5] == '0179134'
+        # return titulo[5] == '0179219'
         return titulo[15] != '1'
 
     titulosPendentes = list(filter(emailsNaoEnviados, titulosTotais))
@@ -94,6 +97,7 @@ for empresa in empresas:
                     
                     EXEC(@sqlText)
             """)
+            print(f"SUCESSO=Titulo: {dados['lancamento']}")
         except Exception as err:
             sqlPool("INSERT", f"""
                     DECLARE @codEmpresa VARCHAR(7) = '{dados['codEmpresa']}'
@@ -115,3 +119,9 @@ for empresa in empresas:
                     
                     EXEC(@sqlText)
             """)
+            print(f"ERRO=Titulo: {dados['lancamento']}")
+            subprocess.run(["powershell", "-Command", "Stop-process -Name scr"], shell=True)
+            time.sleep(2)
+            loginDealernet(executavel, senha)
+            selecionarEmpresa(empresa)
+            continue

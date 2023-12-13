@@ -3,8 +3,6 @@ import pyautogui
 import time
 
 def downloadNotaFiscal(codNf, numeroNf, serieNf, tipo):
-    print('iniciando emissao da nota', numeroNf)
-    # app = Application(backend="win32").connect(title=f'Contas a Receber - [Empresa: MATRIZ - Usuário: MARCOS GUILHERME RABELO]')
     app = Application(backend="win32").connect(class_name="FNWND3115")
     main_window = app.top_window()
     main_window.set_focus()

@@ -48,7 +48,7 @@ def downloadBoleto(lancamento):
         pastaRaiz = explorerBoleto.SalvarSaidaDeImpressaoComo.child_window(title="Endereço: Área de Trabalho", class_name="ToolbarWindow32").exists()
 
     explorerBoleto.SalvarSaidaDeImpressaoComo.child_window(title="Endereço: Área de Trabalho", class_name="ToolbarWindow32").wrapper_object().click_input()
-    pyautogui.write(f'C:\\Users\\guilherme.rabelo\\Desktop\\TesteRPA\\Boletos')
+    pyautogui.write(f'C:\\Users\\automacao\\Documents\\RPA_docs\\Autocob\\Boletos')
     pyautogui.press('ENTER')
     pyautogui.hotkey('alt', 'l')
     time.sleep(1)

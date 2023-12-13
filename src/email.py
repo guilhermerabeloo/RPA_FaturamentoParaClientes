@@ -20,8 +20,9 @@ def envioDoEmail(tipo, dados):
         assunto = f"Olá {dados['cliente']}, o boleto está disponível!"
         email.Attachments.Add(dados['caminhoBoleto'])
 
-    email.To = dados['email']
-    email.BCC = "maiara.silveira@grupofornecedora.com.br;filipi.freitas@grupofornecedora.com.br;luis.castro@grupofornecedora.com.br;matheus.almeida@grupofornecedora.com.br;otavio.martins@grupofornecedora.com.br;guilherme.rabelo@grupofornecedora.com.br"
+    email.To = 'guilherme.rabelo@grupofornecedora.com.br'
+    # email.To = dados['email']
+    # email.BCC = "maiara.silveira@grupofornecedora.com.br;filipi.freitas@grupofornecedora.com.br;luis.castro@grupofornecedora.com.br;matheus.almeida@grupofornecedora.com.br;otavio.martins@grupofornecedora.com.br;guilherme.rabelo@grupofornecedora.com.br"
     email.Subject = assunto
     email.HTMLBody = html_body
     email.Attachments.Add(dados['caminhoNota'])

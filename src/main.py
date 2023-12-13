@@ -28,8 +28,8 @@ empresas = sqlPool("SELECT", """
                     FROM [BD_MTZ_FOR]..ger_emp
                     WHERE 
                         --emp_cd IN ('03')
-                        emp_cd IN ('01')
-                        --emp_cd NOT IN ('20', '10', '07', '06', '05', '08', '09')
+                        --emp_cd IN ('01')
+                        emp_cd NOT IN ('20', '10', '07', '06', '05', '08', '09')
                     ORDER BY emp_ds
                 """)
 
@@ -66,8 +66,8 @@ for empresa in empresas:
             'nota': titulo[11],
             'boleto': titulo[10],
             'titulo': titulo[5],
-            'caminhoNota': f'C:\\Users\\guilherme.rabelo\\Desktop\\TesteRPA\\NotasFiscais\\NF_{numeroNota}.pdf',
-            'caminhoBoleto': f'C:\\Users\\guilherme.rabelo\\Desktop\\TesteRPA\\Boletos\\Boleto_{lancamento}.pdf'
+            'caminhoNota': f'C:\\Users\\automacao\\Documents\\RPA_docs\\Autocob\\NotasFiscais\\NF_{numeroNota}.pdf',
+            'caminhoBoleto': f'C:\\Users\\automacao\\Documents\\RPA_docs\\Autocob\\Boletos\\Boleto_{lancamento}.pdf'
         }
 
         try:
@@ -84,9 +84,9 @@ for empresa in empresas:
                     DECLARE @dataOriginal DATE =  CONVERT(DATE, '{dados['emissao']}', 103)
                     DECLARE @possuiBoleto CHAR(1) = '{'0' if dados['tipo'] == 'carteira' else '1'}'
                     DECLARE @sucesso CHAR(1) = '1'
-                    
+                  
                     DECLARE @dataFormatada VARCHAR(8) =  CONVERT(VARCHAR(8), @dataOriginal, 112)
-                    
+                  
                     DECLARE @sqlText VARCHAR(MAX) = 
                     '
                         INSERT INTO autocob.log_execucoes
@@ -106,9 +106,9 @@ for empresa in empresas:
                     DECLARE @dataOriginal DATE =  CONVERT(DATE, '{dados['emissao']}', 103)
                     DECLARE @possuiBoleto CHAR(1) = '{'0' if dados['tipo'] == 'carteira' else '1'}'
                     DECLARE @sucesso CHAR(1) = '0'
-                    
+                  
                     DECLARE @dataFormatada VARCHAR(8) =  CONVERT(VARCHAR(8), @dataOriginal, 112)
-                    
+                  
                     DECLARE @sqlText VARCHAR(MAX) = 
                     '
                         INSERT INTO autocob.log_execucoes
@@ -116,7 +116,7 @@ for empresa in empresas:
                         VALUES
                             ('''+@codEmpresa+''','''+@codCliente+''','''+@titulo+''', '''+@dataFormatada+''', '''+@possuiBoleto+''','''+@sucesso+''')
                     '
-                    
+                  
                     EXEC(@sqlText)
             """)
             print(f"ERRO=Titulo: {dados['lancamento']}")

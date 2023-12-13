@@ -70,7 +70,7 @@ def downloadNotaFiscal(codNf, numeroNf, serieNf, tipo):
         pastaRaiz = explorerNota.SalvarSaidaDeImpressaoComo.child_window(title="Endereço: Área de Trabalho", class_name="ToolbarWindow32").exists()
 
     explorerNota.SalvarSaidaDeImpressaoComo.child_window(title="Endereço: Área de Trabalho", class_name="ToolbarWindow32").wrapper_object().click_input()
-    pyautogui.write(f'C:\\Users\\guilherme.rabelo\\Desktop\\TesteRPA\\NotasFiscais')
+    pyautogui.write(f'C:\\Users\\automacao\\Documents\\RPA_docs\\Autocob\\NotasFiscais')
     pyautogui.press('ENTER')
     pyautogui.hotkey('alt', 'l')
 

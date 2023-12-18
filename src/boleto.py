@@ -30,12 +30,12 @@ def downloadBoleto(lancamento):
     pyautogui.press('ENTER')
     time.sleep(.5)
     app.ContasAReceberEmpresaUsuarioAutomacao.child_window(title="&Imprimir", class_name="Button").wrapper_object().click_input()
-    time.sleep(4)
+    time.sleep(6)
     atencao = Application(backend="win32").connect(title=f'Atenção')
     atencao.Atencao.child_window(title="&OK", class_name="Button").wrapper_object().click_input()
 
     # Salvando boleto
-    time.sleep(6)
+    time.sleep(7)
     explorerBoleto = Application(backend="win32").connect(title=f'Salvar Saída de Impressão como')
     main_window = explorerBoleto.top_window()
     main_window.set_focus()

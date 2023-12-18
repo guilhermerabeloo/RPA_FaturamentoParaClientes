@@ -90,4 +90,3 @@ def downloadNotaFiscal(codNf, numeroNf, serieNf, tipo):
     app.ContasAReceberEmpresaMatrizUsuarioAutomacao.child_window(title="&S", class_name="Button").wrapper_object().click_input()
 
 time.sleep(5)
-

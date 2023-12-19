@@ -90,5 +90,4 @@ def downloadNotaFiscal(codNf, numeroNf, serieNf, tipo):
     time.sleep(.5)
     app.ContasAReceberEmpresaMatrizUsuarioAutomacao.child_window(title="&S", class_name="Button").wrapper_object().click_input()
 
-# time.sleep(5)
-downloadNotaFiscal('0130915', '145737', 'U', 'boleto')
+time.sleep(5)

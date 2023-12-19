@@ -70,6 +70,7 @@ def downloadNotaFiscal(codNf, numeroNf, serieNf, tipo):
         pastaRaiz = explorerNota.SalvarSaidaDeImpressaoComo.child_window(title="Endereço: Área de Trabalho", class_name="ToolbarWindow32").exists()
 
     explorerNota.SalvarSaidaDeImpressaoComo.child_window(title="Endereço: Área de Trabalho", class_name="ToolbarWindow32").wrapper_object().click_input()
+    pyautogui.press('ENTER') # ativar esta linha caso o click na barra de endereco do documento nao habilite para colar o caminho do  não tiver como
     pyautogui.write(f'C:\\Users\\automacao\\Documents\\RPA_docs\\Autocob\\NotasFiscais')
     pyautogui.press('ENTER')
     pyautogui.hotkey('alt', 'l')
@@ -89,4 +90,5 @@ def downloadNotaFiscal(codNf, numeroNf, serieNf, tipo):
     time.sleep(.5)
     app.ContasAReceberEmpresaMatrizUsuarioAutomacao.child_window(title="&S", class_name="Button").wrapper_object().click_input()
 
-time.sleep(5)
+# time.sleep(5)
+downloadNotaFiscal('0130915', '145737', 'U', 'boleto')

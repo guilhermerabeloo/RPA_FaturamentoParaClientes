@@ -3,7 +3,6 @@ import time
 import pyautogui
 
 def selecionarEmpresa(empresa):
-    print('iniciando mudança para a empresa: ', empresa)
     app = Application(backend="win32").connect(class_name="FNWND3115")
     main_window = app.top_window()
     main_window.set_focus()

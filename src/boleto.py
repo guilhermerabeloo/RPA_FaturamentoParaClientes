@@ -30,12 +30,12 @@ def downloadBoleto(lancamento):
     pyautogui.press('ENTER')
     time.sleep(.5)
     app.ContasAReceberEmpresaUsuarioAutomacao.child_window(title="&Imprimir", class_name="Button").wrapper_object().click_input()
-    time.sleep(4)
+    time.sleep(6)
     atencao = Application(backend="win32").connect(title=f'Atenção')
     atencao.Atencao.child_window(title="&OK", class_name="Button").wrapper_object().click_input()
 
     # Salvando boleto
-    time.sleep(6)
+    time.sleep(7)
     explorerBoleto = Application(backend="win32").connect(title=f'Salvar Saída de Impressão como')
     main_window = explorerBoleto.top_window()
     main_window.set_focus()
@@ -48,7 +48,7 @@ def downloadBoleto(lancamento):
         pastaRaiz = explorerBoleto.SalvarSaidaDeImpressaoComo.child_window(title="Endereço: Área de Trabalho", class_name="ToolbarWindow32").exists()
 
     explorerBoleto.SalvarSaidaDeImpressaoComo.child_window(title="Endereço: Área de Trabalho", class_name="ToolbarWindow32").wrapper_object().click_input()
-    pyautogui.write(f'C:\\Users\\guilherme.rabelo\\Desktop\\TesteRPA\\Boletos')
+    pyautogui.write(f'C:\\Users\\automacao\\Documents\\RPA_docs\\Autocob\\Boletos')
     pyautogui.press('ENTER')
     pyautogui.hotkey('alt', 'l')
     time.sleep(1)

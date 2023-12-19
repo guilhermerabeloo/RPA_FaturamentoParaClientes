@@ -9,12 +9,13 @@ import json
 import subprocess
 import time
 
-
 warnings.filterwarnings("ignore", category=UserWarning)
 with open("../config/config.json", "r", encoding="utf-8") as file:
     sensitive_data = json.load(file)
     dealernetLogin = sensitive_data["acessoDealernet"]
     senha = dealernetLogin['senha']
+    enderecoBoleto = sensitive_data["enderecoBoleto"]
+    enderecoNota = sensitive_data["enderecoNota"]
 
     dealernetModulo = sensitive_data['modulosDealernet']['ContasAReceber']
     executavel = dealernetModulo['executavel']
@@ -40,7 +41,7 @@ for empresa in empresas:
 
     titulosTotais = sqlPool("SELECT", f"EXEC autocob.consulta_titulos '{codEmpresa}'")
     def emailsNaoEnviados(titulo):
-        # return titulo[5] == '0179219'
+        #return titulo[15] != '1' and (titulo[5] == '0179784')
         return titulo[15] != '1'
 
     titulosPendentes = list(filter(emailsNaoEnviados, titulosTotais))
@@ -65,8 +66,8 @@ for empresa in empresas:
             'nota': titulo[11],
             'boleto': titulo[10],
             'titulo': titulo[5],
-            'caminhoNota': f'C:\\Users\\guilherme.rabelo\\Desktop\\TesteRPA\\NotasFiscais\\NF_{numeroNota}.pdf',
-            'caminhoBoleto': f'C:\\Users\\guilherme.rabelo\\Desktop\\TesteRPA\\Boletos\\Boleto_{lancamento}.pdf'
+            'caminhoNota': f'{enderecoNota}NF_{numeroNota}.pdf',
+            'caminhoBoleto': f'{enderecoBoleto}Boleto_{lancamento}.pdf'
         }
 
         try:
@@ -83,9 +84,9 @@ for empresa in empresas:
                     DECLARE @dataOriginal DATE =  CONVERT(DATE, '{dados['emissao']}', 103)
                     DECLARE @possuiBoleto CHAR(1) = '{'0' if dados['tipo'] == 'carteira' else '1'}'
                     DECLARE @sucesso CHAR(1) = '1'
-                    
+                  
                     DECLARE @dataFormatada VARCHAR(8) =  CONVERT(VARCHAR(8), @dataOriginal, 112)
-                    
+                  
                     DECLARE @sqlText VARCHAR(MAX) = 
                     '
                         INSERT INTO autocob.log_execucoes
@@ -96,7 +97,6 @@ for empresa in empresas:
                     
                     EXEC(@sqlText)
             """)
-            print(f"SUCESSO=Titulo: {dados['lancamento']}")
         except Exception as err:
             sqlPool("INSERT", f"""
                     DECLARE @codEmpresa VARCHAR(7) = '{dados['codEmpresa']}'
@@ -105,9 +105,9 @@ for empresa in empresas:
                     DECLARE @dataOriginal DATE =  CONVERT(DATE, '{dados['emissao']}', 103)
                     DECLARE @possuiBoleto CHAR(1) = '{'0' if dados['tipo'] == 'carteira' else '1'}'
                     DECLARE @sucesso CHAR(1) = '0'
-                    
+                  
                     DECLARE @dataFormatada VARCHAR(8) =  CONVERT(VARCHAR(8), @dataOriginal, 112)
-                    
+                  
                     DECLARE @sqlText VARCHAR(MAX) = 
                     '
                         INSERT INTO autocob.log_execucoes
@@ -115,12 +115,14 @@ for empresa in empresas:
                         VALUES
                             ('''+@codEmpresa+''','''+@codCliente+''','''+@titulo+''', '''+@dataFormatada+''', '''+@possuiBoleto+''','''+@sucesso+''')
                     '
-                    
+                  
                     EXEC(@sqlText)
             """)
             print(f"ERRO=Titulo: {dados['lancamento']}")
             subprocess.run(["powershell", "-Command", "Stop-process -Name scr"], shell=True)
-            time.sleep(2)
+            time.sleep(7)
             loginDealernet(executavel, senha)
             selecionarEmpresa(empresa)
             continue
+
+subprocess.run(["powershell", "-Command", "Stop-process -Name scr"], shell=True)

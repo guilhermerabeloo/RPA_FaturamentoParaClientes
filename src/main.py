@@ -27,9 +27,8 @@ empresas = sqlPool("SELECT", """
                         emp_banco
                     FROM [BD_MTZ_FOR]..ger_emp
                     WHERE 
-                        --emp_cd IN ('03')
-                        emp_cd IN ('01')
-                        --emp_cd NOT IN ('20', '10', '07', '06', '05', '08', '09')
+                        --emp_cd IN ('01')
+                        emp_cd NOT IN ('20', '10', '07', '06', '05', '08', '09')
                     ORDER BY emp_ds
                 """)
 

@@ -38,7 +38,7 @@ def downloadNotaFiscal(codNf, numeroNf, serieNf, tipo):
         pyautogui.hotkey('ALT', 'N')
         time.sleep(1)
     pyautogui.hotkey('ALT', 'S')
-    time.sleep(4)
+    time.sleep(6)
 
     if serieNf == 'S':
         for i in range(6):

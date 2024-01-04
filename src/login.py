@@ -3,18 +3,26 @@ import pyautogui
 import time
 import subprocess
 
+
 def loginDealernet(modulo, senha):
     comando_powershell = f"start {modulo}"
     processoAtivo = subprocess.run(["powershell", "-Command", f"Get-Process -Name scr"], shell=True, capture_output=True, text=True)
 
     if processoAtivo.returncode == 0:
-        subprocess.run(["powershell", "-Command", "Stop-process -Name scr"], shell=True)
-    time.sleep(5)
+        subprocess.run(["powershell", "-Command", "Stop-process -Name scr -f"], shell=True)
+    time.sleep(5) 
 
     subprocess.run(["powershell", "-Command", comando_powershell], capture_output=False, text=True)
-    time.sleep(5)
+    try: 
+        atencao = Application(backend="win32").connect(title=f'Atenção', timeout=10)
+        atencao.Atencao.wait('visible', timeout=2)
+        pyautogui.press('ENTER')
+        time.sleep(5)
+    except:
+        time.sleep(5)
 
     telaLogin = Application(backend="win32").connect(title='Segurança')
+
     time.sleep(2)
     telaLogin.Seguranca.set_focus()
 

@@ -75,7 +75,7 @@ for empresa in empresas:
                     downloadNotaFiscal(dados['codigoDaNota'], dados['numeroNota'], dados['serie'], dados['tipo'])
                 if dados['tipo']=='boleto':
                     downloadBoleto(dados['lancamento'])
-                # envioDoEmail(dados['tipo'], dados)
+                envioDoEmail(dados['tipo'], dados)
 
                 sqlPool("INSERT", f"""
                         DECLARE @codEmpresa VARCHAR(7) = '{dados['codEmpresa']}'

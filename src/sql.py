@@ -23,7 +23,6 @@ def sqlPool(operacao, script):
 
     try: 
         conexao = pyodbc.connect(dados_conexao)
-        # print("Conexão com banco de dados criada com sucesso!")
         try:
             cursor = conexao.cursor()
             cursor.execute(script)

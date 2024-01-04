@@ -25,5 +25,3 @@ def selecionarEmpresa(empresa):
     telaEmpresa.Seguranca.child_window(title="&OK", class_name="Button").wrapper_object().click_input()
     time.sleep(5)
                       
-
-selecionarEmpresa('FME MATRIZ - 0001/69')

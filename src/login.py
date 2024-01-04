@@ -4,10 +4,13 @@ import time
 import subprocess
 
 def loginDealernet(modulo, senha):
-    subprocess.run(["powershell", "-Command", "Stop-process -Name scr"], shell=True)
+    comando_powershell = f"start {modulo}"
+    processoAtivo = subprocess.run(["powershell", "-Command", f"Get-Process -Name scr"], shell=True, capture_output=True, text=True)
+
+    if processoAtivo.returncode == 0:
+        subprocess.run(["powershell", "-Command", "Stop-process -Name scr"], shell=True)
     time.sleep(5)
 
-    comando_powershell = f"start {modulo}"
     subprocess.run(["powershell", "-Command", comando_powershell], capture_output=False, text=True)
     time.sleep(5)
 

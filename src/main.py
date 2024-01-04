@@ -8,6 +8,7 @@ import warnings
 import json
 import subprocess
 import time
+import os
 
 warnings.filterwarnings("ignore", category=UserWarning)
 with open("../config/config.json", "r", encoding="utf-8") as file:
@@ -70,11 +71,11 @@ for empresa in empresas:
             }
 
             try:
-                if dados['parcela'] == '001':
+                if not os.path.exists(dados['caminhoNota']):
                     downloadNotaFiscal(dados['codigoDaNota'], dados['numeroNota'], dados['serie'], dados['tipo'])
                 if dados['tipo']=='boleto':
                     downloadBoleto(dados['lancamento'])
-                envioDoEmail(dados['tipo'], dados)
+                # envioDoEmail(dados['tipo'], dados)
 
                 sqlPool("INSERT", f"""
                         DECLARE @codEmpresa VARCHAR(7) = '{dados['codEmpresa']}'

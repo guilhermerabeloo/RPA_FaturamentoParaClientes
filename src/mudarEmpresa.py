@@ -21,23 +21,9 @@ def selecionarEmpresa(empresa):
     time.sleep(.5)
     telaEmpresa.Seguranca.set_focus()
     time.sleep(2)
-    empresaEncontrada = False
-    cont = 0
-    while empresaEncontrada==False:
-        empresaSelecionada = telaEmpresa.Seguranca.children()[2].window_text()
-        empresaFormatada = empresaSelecionada[:-2].strip()
-
-        if empresaFormatada==empresa:
-            empresaEncontrada = True
-        else:
-            if cont <= 25:
-                pyautogui.press('down')
-            else: 
-                pyautogui.press('up')
-        time.sleep(.5)
-        cont+=1
-        if cont == 50:
-            break
+    pyautogui.write(empresa)
     telaEmpresa.Seguranca.child_window(title="&OK", class_name="Button").wrapper_object().click_input()
     time.sleep(5)
                       
+
+selecionarEmpresa('FME MATRIZ - 0001/69')

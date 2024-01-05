@@ -25,10 +25,11 @@ loginDealernet(executavel, senha)
 empresas = sqlPool("SELECT", """
                     SELECT 
                         emp_cd,
-                        emp_ds,
+                        REPLACE(emp_ds, 'LUIS', 'LUÍS') AS emp_ds,
                         emp_banco
                     FROM [BD_MTZ_FOR]..ger_emp
                     WHERE 
+                        --emp_cd in ('12')
                         emp_cd NOT IN ('20', '10', '07', '06', '05', '08', '09')
                     ORDER BY emp_ds
                 """)
@@ -40,7 +41,7 @@ for empresa in empresas:
 
     titulosTotais = sqlPool("SELECT", f"EXEC autocob.consulta_titulos '{codEmpresa}'")
     def emailsNaoEnviados(titulo):
-        return titulo[15] != '1' and titulo[7] != '0024417'
+        return titulo[15] != '1'
 
     titulosPendentes = list(filter(emailsNaoEnviados, titulosTotais))
     if len(titulosPendentes):

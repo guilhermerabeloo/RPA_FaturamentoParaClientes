@@ -37,7 +37,15 @@ def downloadNotaFiscal(codNf, numeroNf, serieNf, tipo):
     if tipo == 'boleto':
         pyautogui.hotkey('ALT', 'N')
         time.sleep(5)
-    pyautogui.hotkey('ALT', 'S')
+        pyautogui.hotkey('ALT', 'S')
+    else:
+        atencao = Application(backend="win32").connect(title="Atenção", timeout=5)
+        imprimeBoleto = atencao.Atencao.child_window(title="Imprime Boleto de Cobrança ? ", class_name="Edit")
+        if imprimeBoleto.exists():
+            atencao.Atencao.child_window(title="&Não", class_name="Button").click_input()
+
+        time.sleep(5)
+        pyautogui.hotkey('ALT', 'S')
     time.sleep(10) 
 
     if serieNf == 'S':
@@ -61,6 +69,7 @@ def downloadNotaFiscal(codNf, numeroNf, serieNf, tipo):
     explorerNota = Application(backend="win32").connect(title=f'Salvar Saída de Impressão como')
     main_window = explorerNota.top_window()
     main_window.set_focus()
+    time.sleep(1)
     pyautogui.write(f'NF_{numeroNf}')
     time.sleep(1)
 

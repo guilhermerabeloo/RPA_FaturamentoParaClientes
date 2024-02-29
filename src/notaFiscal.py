@@ -2,7 +2,7 @@ from pywinauto.application import Application
 import pyautogui
 import time
 
-def downloadNotaFiscal(codNf, numeroNf, serieNf, tipo):
+def downloadNotaFiscal(codNf, numeroNf, serieNf, tipo, codEmpresa):
     app = Application(backend="win32").connect(class_name="FNWND3115")
     main_window = app.top_window()
     main_window.set_focus()
@@ -17,7 +17,7 @@ def downloadNotaFiscal(codNf, numeroNf, serieNf, tipo):
 
     time.sleep(1)
     pyautogui.press('ENTER')
-    time.sleep(3)
+    time.sleep(6)
     pyautogui.write(codNf)
     time.sleep(.5)
     pyautogui.press('TAB')
@@ -70,7 +70,7 @@ def downloadNotaFiscal(codNf, numeroNf, serieNf, tipo):
     main_window = explorerNota.top_window()
     main_window.set_focus()
     time.sleep(1)
-    pyautogui.write(f'NF_{numeroNf}')
+    pyautogui.write(f'NF_{numeroNf}{serieNf}_{codEmpresa}')
     time.sleep(1)
 
     pastaRaiz = False

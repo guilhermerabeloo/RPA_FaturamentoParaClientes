@@ -29,7 +29,7 @@ empresas = sqlPool("SELECT", """
                         emp_banco
                     FROM [BD_MTZ_FOR]..ger_emp
                     WHERE 
-                        --emp_cd in ('12')
+                        --emp_cd in ('22')
                         emp_cd NOT IN ('20', '10', '07', '06', '05', '08', '09')
                     ORDER BY emp_ds
                 """)
@@ -67,15 +67,15 @@ for empresa in empresas:
                 'nota': titulo[11],
                 'boleto': titulo[10],
                 'titulo': titulo[5],
-                'caminhoNota': f'{enderecoNota}NF_{numeroNota}.pdf',
-                'caminhoBoleto': f'{enderecoBoleto}Boleto_{lancamento}.pdf'
+                'caminhoNota': f'{enderecoNota}NF_{numeroNota}{titulo[9]}_{codEmpresa}.pdf',
+                'caminhoBoleto': f'{enderecoBoleto}Boleto_{numeroNota}{titulo[9]}_{lancamento}_{codEmpresa}.pdf'
             }
 
             try:
                 if not os.path.exists(dados['caminhoNota']):
-                    downloadNotaFiscal(dados['codigoDaNota'], dados['numeroNota'], dados['serie'], dados['tipo'])
+                    downloadNotaFiscal(dados['codigoDaNota'], dados['numeroNota'], dados['serie'], dados['tipo'], codEmpresa)
                 if dados['tipo']=='boleto':
-                    downloadBoleto(dados['lancamento'])
+                    downloadBoleto(codEmpresa, dados['lancamento'], dados['numeroNota'], dados['serie'])
                 envioDoEmail(dados['tipo'], dados)
 
                 sqlPool("INSERT", f"""

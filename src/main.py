@@ -11,7 +11,7 @@ import time
 import os
 
 warnings.filterwarnings("ignore", category=UserWarning)
-with open("../config/config.json", "r", encoding="utf-8") as file:
+with open("C:\\Users\\automacao\\Documents\\RPA_python\\RPA_FaturamentoParaClientes\\config\\config.json", "r", encoding="utf-8") as file:
     sensitive_data = json.load(file)
     dealernetLogin = sensitive_data["acessoDealernet"]
     senha = dealernetLogin['senha']
@@ -29,7 +29,7 @@ empresas = sqlPool("SELECT", """
                         emp_banco
                     FROM [BD_MTZ_FOR]..ger_emp
                     WHERE 
-                        --emp_cd in ('22')
+                        --emp_cd in ('04')
                         emp_cd NOT IN ('20', '10', '07', '06', '05', '08', '09')
                     ORDER BY emp_ds
                 """)
@@ -70,7 +70,6 @@ for empresa in empresas:
                 'caminhoNota': f'{enderecoNota}NF_{numeroNota}{titulo[9]}_{codEmpresa}.pdf',
                 'caminhoBoleto': f'{enderecoBoleto}Boleto_{numeroNota}{titulo[9]}_{lancamento}_{codEmpresa}.pdf'
             }
-
             try:
                 if not os.path.exists(dados['caminhoNota']):
                     downloadNotaFiscal(dados['codigoDaNota'], dados['numeroNota'], dados['serie'], dados['tipo'], codEmpresa)
@@ -125,6 +124,7 @@ for empresa in empresas:
                 time.sleep(7)
                 loginDealernet(executavel, senha)
                 selecionarEmpresa(empresa)
+                print(err)
                 continue
 
 subprocess.run(["powershell", "-Command", "Stop-process -Name scr"], shell=True)

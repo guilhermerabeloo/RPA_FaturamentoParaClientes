@@ -2,12 +2,12 @@ import win32com.client as win32
 import os
 import json
 
-html_file_path_carteira = os.path.join(os.path.dirname(__file__), 'assets', 'emailCarteira.html')
-html_file_path_boleto = os.path.join(os.path.dirname(__file__), 'assets', 'emailBoleto.html')
+html_file_path_carteira = 'C:\\Users\\automacao\\Documents\\RPA_python\\RPA_FaturamentoParaClientes\\src\\assets\\emailCarteira.html'
+html_file_path_boleto = 'C:\\Users\\automacao\\Documents\\RPA_python\\RPA_FaturamentoParaClientes\\src\\assets\\emailBoleto.html'
 
 def envioDoEmail(tipo, dados):
     try:
-        with open("../config/config.json", "r", encoding="utf-8") as file:
+        with open("C:\\Users\\automacao\\Documents\\RPA_python\\RPA_FaturamentoParaClientes\\config\\config.json", "r", encoding="utf-8") as file:
             sensitive_data = json.load(file)
             emailsCopiaOculta = sensitive_data["enderecosEmailsCCo"]
 
@@ -36,3 +36,4 @@ def envioDoEmail(tipo, dados):
 
     except Exception as err:
         print(err)
+        raise Exception('Erro ao enviar email')

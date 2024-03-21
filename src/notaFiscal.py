@@ -46,7 +46,7 @@ def downloadNotaFiscal(codNf, numeroNf, serieNf, tipo, codEmpresa):
 
         time.sleep(5)
         pyautogui.hotkey('ALT', 'S')
-    time.sleep(10) 
+    time.sleep(20) 
 
     if serieNf == 'S':
         for i in range(6):
@@ -65,8 +65,7 @@ def downloadNotaFiscal(codNf, numeroNf, serieNf, tipo, codEmpresa):
         pyautogui.press('ENTER')
 
     # Salvando boleto
-    time.sleep(10)
-    explorerNota = Application(backend="win32").connect(title=f'Salvar Saída de Impressão como')
+    explorerNota = Application(backend="win32").connect(title=f'Salvar Saída de Impressão como', timeout=40)
     main_window = explorerNota.top_window()
     main_window.set_focus()
     time.sleep(1)
@@ -80,7 +79,7 @@ def downloadNotaFiscal(codNf, numeroNf, serieNf, tipo, codEmpresa):
 
     explorerNota.SalvarSaidaDeImpressaoComo.child_window(title="Endereço: Área de Trabalho", class_name="ToolbarWindow32").wrapper_object().click_input()
     pyautogui.press('ENTER') # ativar esta linha caso o click na barra de endereco do documento nao habilite para colar o caminho do  não tiver como
-    pyautogui.write(f'C:\\Users\\automacao\\Documents\\RPA_docs\\Autocob\\NotasFiscais')
+    pyautogui.write(f'C:\\Users\\automacao\\Documents\\RPA_docs\\EmailsClientes\\NotasFiscais\\')
     pyautogui.press('ENTER')
     pyautogui.hotkey('alt', 'l')
 

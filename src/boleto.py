@@ -51,7 +51,7 @@ def downloadBoleto(codEmpresa, lancamento, numeroNf,  serieNf):
 
         explorerBoleto.SalvarSaidaDeImpressaoComo.child_window(title="Endereço: Área de Trabalho", class_name="ToolbarWindow32").wrapper_object().click_input()
         pyautogui.press('ENTER') # ativar esta linha caso o click na barra de endereco do documento nao habilite para colar o caminho do  não tiver como
-        pyautogui.write(f'C:\\Users\\automacao\\Documents\\RPA_docs\\Autocob\\Boletos')
+        pyautogui.write(f'C:\\Users\\automacao\\Documents\\RPA_docs\\EmailsClientes\\Boletos\\')
         pyautogui.press('ENTER')
         pyautogui.hotkey('alt', 'l')
         time.sleep(2)

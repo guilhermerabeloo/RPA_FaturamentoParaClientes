@@ -4,8 +4,7 @@ from configparser import ConfigParser
 
 def sqlPool(operacao, script):
     def readConfig():
-        script_dir = os.path.dirname(__file__)
-        config_path = os.path.join(script_dir, '..', 'config', 'config.ini')
+        config_path = "C:\\Users\\automacao\\Documents\\RPA_python\\RPA_FaturamentoParaClientes\\config\\config.ini"
 
         config = ConfigParser()
         config.read(config_path)

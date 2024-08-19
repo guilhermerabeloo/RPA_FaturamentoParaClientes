@@ -35,5 +35,5 @@ def envioDoEmail(tipo, dados):
         email.Send()
 
     except Exception as err:
-        print(err)
+        print(f'Erro email: {err}')
         raise Exception('Erro ao enviar email')

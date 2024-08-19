@@ -76,6 +76,7 @@ for empresa in empresas:
                 if dados['tipo']=='boleto':
                     downloadBoleto(codEmpresa, dados['lancamento'], dados['numeroNota'], dados['serie'])
                 envioDoEmail(dados['tipo'], dados)
+                time.sleep(5)
 
                 sqlPool("INSERT", f"""
                         DECLARE @codEmpresa VARCHAR(7) = '{dados['codEmpresa']}'

@@ -67,6 +67,8 @@ def downloadBoleto(codEmpresa, lancamento, numeroNf,  serieNf):
         
         main_window = app.top_window()
         main_window.set_focus()
+        time.sleep(3)
+
         app.ContasAReceberEmpresaUsuarioAutomacao.child_window(title="&Cancelar", class_name="Button").wrapper_object().click_input()
         time.sleep(5)
     except Exception as err:

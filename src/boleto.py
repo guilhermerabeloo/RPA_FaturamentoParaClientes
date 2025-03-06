@@ -41,18 +41,19 @@ def downloadBoleto(codEmpresa, lancamento, numeroNf,  serieNf):
         explorerBoleto = Application(backend="win32").connect(title=f'Salvar Saída de Impressão como', timeout=60)
         main_window = explorerBoleto.top_window()
         main_window.set_focus()
-        pyautogui.write(f'Boleto_{numeroNf}{serieNf}_{lancamento}_{codEmpresa}')
+        time.sleep(10)
+        pyautogui.write(f'C:\\Users\\automacao\\Documents\\RPA_docs\\EmailsClientes\\Boletos\\Boleto_{numeroNf}{serieNf}_{lancamento}_{codEmpresa}')
         time.sleep(2)
 
-        pastaRaiz = False
-        while pastaRaiz==False: # Produrando a pasta Desktop
-            explorerBoleto.SalvarSaidaDeImpressaoComo.child_window(title="Barra de ferramentas da faixa superior", class_name="ToolbarWindow32").wrapper_object().click_input()
-            pastaRaiz = explorerBoleto.SalvarSaidaDeImpressaoComo.child_window(title="Endereço: Área de Trabalho", class_name="ToolbarWindow32").exists()
+        # pastaRaiz = False
+        # while pastaRaiz==False: # Produrando a pasta Desktop
+        #     explorerBoleto.SalvarSaidaDeImpressaoComo.child_window(title="Barra de ferramentas da faixa superior", class_name="ToolbarWindow32").wrapper_object().click_input()
+        #     pastaRaiz = explorerBoleto.SalvarSaidaDeImpressaoComo.child_window(title="Endereço: Área de Trabalho", class_name="ToolbarWindow32").exists()
 
-        explorerBoleto.SalvarSaidaDeImpressaoComo.child_window(title="Endereço: Área de Trabalho", class_name="ToolbarWindow32").wrapper_object().click_input()
-        pyautogui.press('ENTER') # ativar esta linha caso o click na barra de endereco do documento nao habilite para colar o caminho do  não tiver como
-        pyautogui.write(f'C:\\Users\\automacao\\Documents\\RPA_docs\\EmailsClientes\\Boletos\\')
-        pyautogui.press('ENTER')
+        # explorerBoleto.SalvarSaidaDeImpressaoComo.child_window(title="Endereço: Área de Trabalho", class_name="ToolbarWindow32").wrapper_object().click_input()
+        # pyautogui.press('ENTER') # ativar esta linha caso o click na barra de endereco do documento nao habilite para colar o caminho do  não tiver como
+        # pyautogui.write(f'C:\\Users\\automacao\\Documents\\RPA_docs\\EmailsClientes\\Boletos\\')
+        # pyautogui.press('ENTER')
         pyautogui.hotkey('alt', 'l')
         time.sleep(2)
 

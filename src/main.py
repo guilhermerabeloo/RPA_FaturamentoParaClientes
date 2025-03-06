@@ -113,9 +113,9 @@ for empresa in empresas:
                         DECLARE @sqlText VARCHAR(MAX) = 
                         '
                             INSERT INTO autocob.log_execucoes
-                            (empresa, cliente, titulo, dt_tituloCriacao, boleto, sucesso)
+                            (empresa, cliente, titulo, dt_tituloCriacao, boleto, sucesso, retorno_execucao, horas_execucao)
                             VALUES
-                                ('''+@codEmpresa+''','''+@codCliente+''','''+@titulo+''', '''+@dataFormatada+''', '''+@possuiBoleto+''','''+@sucesso+''')
+                                ('''+@codEmpresa+''','''+@codCliente+''','''+@titulo+''', '''+@dataFormatada+''', '''+@possuiBoleto+''','''+@sucesso+''', 0.83933, 0.11666)
                         '
                     
                         EXEC(@sqlText)

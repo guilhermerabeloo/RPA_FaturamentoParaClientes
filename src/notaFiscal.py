@@ -68,19 +68,19 @@ def downloadNotaFiscal(codNf, numeroNf, serieNf, tipo, codEmpresa):
     explorerNota = Application(backend="win32").connect(title=f'Salvar Saída de Impressão como', timeout=40)
     main_window = explorerNota.top_window()
     main_window.set_focus()
-    time.sleep(1)
-    pyautogui.write(f'NF_{numeroNf}{serieNf}_{codEmpresa}')
+    time.sleep(10)
+    pyautogui.write(f'C:\\Users\\automacao\\Documents\\RPA_docs\\EmailsClientes\\NotasFiscais\\NF_{numeroNf}{serieNf}_{codEmpresa}')
     time.sleep(1)
 
-    pastaRaiz = False
-    while pastaRaiz==False: # Produrando a pasta Desktop
-        explorerNota.SalvarSaidaDeImpressaoComo.child_window(title="Barra de ferramentas da faixa superior", class_name="ToolbarWindow32").wrapper_object().click_input()
-        pastaRaiz = explorerNota.SalvarSaidaDeImpressaoComo.child_window(title="Endereço: Área de Trabalho", class_name="ToolbarWindow32").exists()
+    # pastaRaiz = False
+    # while pastaRaiz==False: # Produrando a pasta Desktop
+    #     explorerNota.SalvarSaidaDeImpressaoComo.child_window(title="Barra de ferramentas da faixa superior", class_name="ToolbarWindow32").wrapper_object().click_input()
+    #     pastaRaiz = explorerNota.SalvarSaidaDeImpressaoComo.child_window(title="Endereço: Área de Trabalho", class_name="ToolbarWindow32").exists()
 
-    explorerNota.SalvarSaidaDeImpressaoComo.child_window(title="Endereço: Área de Trabalho", class_name="ToolbarWindow32").wrapper_object().click_input()
-    pyautogui.press('ENTER') # ativar esta linha caso o click na barra de endereco do documento nao habilite para colar o caminho do  não tiver como
-    pyautogui.write(f'C:\\Users\\automacao\\Documents\\RPA_docs\\EmailsClientes\\NotasFiscais\\')
-    pyautogui.press('ENTER')
+    # explorerNota.SalvarSaidaDeImpressaoComo.child_window(title="Endereço: Área de Trabalho", class_name="ToolbarWindow32").wrapper_object().click_input()
+    # pyautogui.press('ENTER') # ativar esta linha caso o click na barra de endereco do documento nao habilite para colar o caminho do  não tiver como
+    # pyautogui.write(f'C:\\Users\\automacao\\Documents\\RPA_docs\\EmailsClientes\\NotasFiscais\\')
+    # pyautogui.press('ENTER')
     pyautogui.hotkey('alt', 'l')
 
     time.sleep(2)
